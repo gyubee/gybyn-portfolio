@@ -6,8 +6,8 @@ interface HeroTitleProps {
   showContent: boolean;
 }
 
-const mainText = "Hi, I'm Gyubeen Lim";
-const subTitle = "— your future developer.";
+const mainText = "Hey, I'm Gyubeen Lim";
+const subTitle = "— your future software engineer.";
 
 const HeroTitle: React.FC<HeroTitleProps> = ({ onFinish, showContent }) => {
   const [typedText, setTypedText] = useState("");

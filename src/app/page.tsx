@@ -5,6 +5,7 @@ import Preloader from './components/Preloader';
 import Hero from './components/Hero';
 import Section from './components/Section';
 import SectionNav from './components/SectionNav';
+import AboutSection from './components/AboutSection';
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -48,7 +49,7 @@ export default function Home() {
       <main>
         <Hero />
         <Section id="about" title="About">
-          <p>This is about section content.</p>
+          <AboutSection />
         </Section>
         <Section id="projects" title="Projects">
           <p>Here are some of my projects.</p>
