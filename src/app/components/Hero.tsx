@@ -52,7 +52,7 @@ const Hero: React.FC = () => {
               grow through <span className="inline border-b-2 border-[#FACC15] align-baseline">feedback</span>, and design for <span className="inline border-b-2 border-[#FACC15] align-baseline">users</span>.
             </motion.p>
             <a
-              href={withBasePath("/cv.pdf")}
+              href={withBasePath("/CV_Resume(2026).pdf")}
               download
               className="mt-6 inline-block px-6 py-3 bg-[#4F46E5] text-white font-semibold rounded-lg shadow hover:bg-indigo-800 transition-colors duration-200"
             >
