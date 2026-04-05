@@ -19,6 +19,12 @@ const nextConfig: NextConfig = {
       },
       // Browsers request these at the origin root; static files live under basePath.
       {
+        source: "/favicon.ico",
+        destination: `${basePath}/favicon.ico`,
+        permanent: false,
+        basePath: false,
+      },
+      {
         source: "/apple-touch-icon.png",
         destination: `${basePath}/apple-touch-icon.png`,
         permanent: false,

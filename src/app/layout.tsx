@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   title: "Gyubeen's Portfolio",
   description: "Gyubeen's Portfolio",
   icons: {
+    // Explicit paths so production + basePath always emit correct <link rel="icon"> (app/favicon.ico alone can miss basePath in some cases).
+    icon: `${basePath}/favicon.ico`,
     apple: `${basePath}/apple-touch-icon.png`,
   },
 };
