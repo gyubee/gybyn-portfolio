@@ -7,7 +7,7 @@ interface HeroTitleProps {
 }
 
 const mainText = "Hey, I'm Gyubeen Lim";
-const subTitle = "— your future software engineer.";
+const subTitle = "- your future software engineer.";
 
 const HeroTitle: React.FC<HeroTitleProps> = ({ onFinish, showContent }) => {
   const [typedText, setTypedText] = useState("");

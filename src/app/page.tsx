@@ -1,18 +1,20 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Preloader from './components/Preloader';
 import Hero from './components/Hero';
 import Section from './components/Section';
 import SectionNav from './components/SectionNav';
 import AboutSection from './components/AboutSection';
+import ProjectGrid from './components/ProjectGrid';
+import ContactSection from './components/ContactSection';
+
+const SECTION_IDS = ['about', 'projects', 'contact'] as const;
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [showNav, setShowNav] = useState(false);
   const [activeId, setActiveId] = useState('about');
-  const sectionIds = ['about', 'projects', 'education'];
-  const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,7 +30,7 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const offsets = sectionIds.map(id => {
+      const offsets = SECTION_IDS.map((id) => {
         const el = document.getElementById(id);
         if (!el) return { id, top: Infinity };
         return { id, top: Math.abs(el.getBoundingClientRect().top) };
@@ -39,23 +41,36 @@ export default function Home() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [sectionIds]);
+  }, []);
+
+  // Preloader keeps #about/#projects/etc. out of the DOM initially, so the browser
+  // cannot scroll to the hash on first paint - re-apply after main content mounts.
+  useEffect(() => {
+    if (loading) return;
+    const id = window.location.hash.replace(/^#/, '');
+    if (!id) return;
+    const el = document.getElementById(id);
+    if (!el) return;
+    requestAnimationFrame(() => {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }, [loading]);
 
   if (loading) return <Preloader onFinish={() => setLoading(false)} />;
 
   return (
     <>
       {showNav && <SectionNav activeId={activeId} />}
-      <main>
+      <main className="flex-1">
         <Hero />
         <Section id="about" title="About">
           <AboutSection />
         </Section>
         <Section id="projects" title="Projects">
-          <p>Here are some of my projects.</p>
+          <ProjectGrid />
         </Section>
-        <Section id="education" title="Education">
-          <p>Contact form or info goes here.</p>
+        <Section id="contact" title="Contact">
+          <ContactSection />
         </Section>
       </main>
     </>

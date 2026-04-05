@@ -7,7 +7,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="rounded-xl p-8 gap-8 max-w-5xl mx-auto"
+      className="mx-auto max-w-6xl gap-8 rounded-xl p-8"
     >
       <div className="flex flex-col md:flex-row gap-8 items-center">
         <div className="w-full md:w-[50%] flex justify-center relative">
