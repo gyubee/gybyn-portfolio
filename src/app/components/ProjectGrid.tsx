@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { withBasePath } from "@/config/paths";
 import { projectGroups } from "@/content/projects";
 
 const gradients = [
@@ -34,7 +35,7 @@ export default function ProjectGrid() {
                       <div className="relative aspect-[4/3] w-full bg-neutral-100 dark:bg-neutral-900">
                         {project.coverImage ? (
                           <Image
-                            src={project.coverImage}
+                            src={withBasePath(project.coverImage)}
                             alt=""
                             fill
                             className="object-cover"

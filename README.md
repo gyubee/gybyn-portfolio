@@ -1,4 +1,4 @@
-# gybyn.com
+# gybyn.com/portfolio
 
 Personal portfolio site built with [Next.js](https://nextjs.org) (App Router), TypeScript, and Tailwind CSS.
 
@@ -20,7 +20,7 @@ npm ci
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000/portfolio](http://localhost:3000/portfolio).
 
 ### Scripts
 

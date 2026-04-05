@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { withBasePath } from "@/config/paths";
 import HeroTitle from "./HeroTitle";
 
 const Hero: React.FC = () => {
@@ -18,7 +19,7 @@ const Hero: React.FC = () => {
               transition={{ duration: 0.7 }}
             >
               <Image
-                src="/profile.jpg"
+                src={withBasePath("/profile.jpg")}
                 alt="Gyubeen Profile"
                 fill
                 sizes="280px"
@@ -51,7 +52,7 @@ const Hero: React.FC = () => {
               grow through <span className="inline border-b-2 border-[#FACC15] align-baseline">feedback</span>, and design for <span className="inline border-b-2 border-[#FACC15] align-baseline">users</span>.
             </motion.p>
             <a
-              href="/cv.pdf"
+              href={withBasePath("/cv.pdf")}
               download
               className="mt-6 inline-block px-6 py-3 bg-[#4F46E5] text-white font-semibold rounded-lg shadow hover:bg-indigo-800 transition-colors duration-200"
             >

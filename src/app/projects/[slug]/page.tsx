@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import type { Project } from "@/content/projects";
 import { getProjectBySlug, projects } from "@/content/projects";
+import { withBasePath } from "@/config/paths";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -46,7 +47,7 @@ function ProjectHero({ project }: { project: Project }) {
     <div className="relative aspect-video w-full overflow-hidden bg-neutral-100 dark:bg-neutral-900">
       {project.coverImage ? (
         <Image
-          src={project.coverImage}
+          src={withBasePath(project.coverImage)}
           alt=""
           fill
           className="object-cover"
@@ -144,9 +145,16 @@ export default async function ProjectDetailPage({ params }: Props) {
                     controls
                     playsInline
                     preload="metadata"
-                    poster={d.demoVideo.poster}
+                    poster={
+                      d.demoVideo.poster
+                        ? withBasePath(d.demoVideo.poster)
+                        : undefined
+                    }
                   >
-                    <source src={d.demoVideo.src} type="video/mp4" />
+                    <source
+                      src={withBasePath(d.demoVideo.src)}
+                      type="video/mp4"
+                    />
                     Your browser does not support embedded video.
                   </video>
                 </div>
@@ -216,7 +224,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                       className="relative aspect-[4/3] overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700"
                     >
                       <Image
-                        src={img.src}
+                        src={withBasePath(img.src)}
                         alt={img.alt}
                         fill
                         className="object-cover"

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { HiOutlineEnvelope, HiOutlineMapPin } from "react-icons/hi2";
 import { siteContact } from "@/config/site";
+import { withBasePath } from "@/config/paths";
 
 function buildMailto(name: string, email: string, message: string) {
   const subject = encodeURIComponent(`[Portfolio] Message from ${name}`);
@@ -28,7 +29,7 @@ export default function ContactSection() {
     setErrorMessage("");
 
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch(withBasePath("/api/contact"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),

@@ -23,20 +23,42 @@ const Preloader: React.FC<PreloaderProps> = ({ onFinish }) => {
     >
       {show && (
         <motion.div
-          className="fixed inset-0 bg-white flex flex-col items-center justify-center z-50"
+          key="preloader-backdrop"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white dark:bg-[#0a0a0a]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.8 } }}
+          exit={{
+            opacity: 1,
+            transition: { delay: 0.48, duration: 0 },
+          }}
         >
-          {/* Bouncing Dots */}
-          <div className="flex flex-col items-center">
-            <div className="flex space-x-2 mb-2">
-              <span className="w-3 h-3 bg-[#FACC15] rounded-full animate-bounce" style={{ animationDelay: '0s' }}></span>
-              <span className="w-3 h-3 bg-[#4F46E5] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
-              <span className="w-3 h-3 bg-[#94A3B8] rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></span>
+          <motion.div
+            className="flex flex-col items-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { delay: 0.05 } }}
+            exit={{
+              opacity: 0,
+              transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+            }}
+          >
+            <div className="mb-2 flex space-x-2">
+              <span
+                className="h-3 w-3 animate-bounce rounded-full bg-[#FACC15]"
+                style={{ animationDelay: "0s" }}
+              />
+              <span
+                className="h-3 w-3 animate-bounce rounded-full bg-[#4F46E5]"
+                style={{ animationDelay: "0.2s" }}
+              />
+              <span
+                className="h-3 w-3 animate-bounce rounded-full bg-[#94A3B8]"
+                style={{ animationDelay: "0.4s" }}
+              />
             </div>
-            <span className="mt-3 text-[#4F46E5] text-2xl">Welcome to gybyn :)</span>
-          </div>
+            <span className="mt-3 text-2xl text-[#4F46E5] dark:text-indigo-400">
+              Welcome to gybyn :)
+            </span>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
