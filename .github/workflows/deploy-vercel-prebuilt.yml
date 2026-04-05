@@ -1,12 +1,11 @@
-# Deploy production to Vercel when pushing to the default branch.
-# Prerequisites: Vercel project + GitHub secrets (see README).
+# Manual fallback if Vercel’s Git clone/build does not fetch Git LFS assets correctly.
+# When using this path: set Vercel → Settings → Git → Ignored Build Step to `exit 0`
+# (skips duplicate Git-triggered builds), then add `push: branches: [main]` under `on` below
+# and configure GitHub secrets VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID.
 
-name: Deploy to Vercel
+name: Deploy to Vercel (prebuilt)
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 env:

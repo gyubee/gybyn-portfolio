@@ -43,33 +43,30 @@ Create `.env.local` in the project root (never commit it). Used by the contact A
 
 If these are missing, `POST /api/contact` returns `503` and the UI falls back to a `mailto:` draft.
 
-## Deployment (GitHub Actions → Vercel)
+In **`.env.local`**, quote values that contain spaces, e.g. `RESEND_FROM_EMAIL="Portfolio <hi@yourdomain.com>"`. In the **Vercel dashboard**, enter the same text **without** wrapping quotes (the field stores the value as-is).
 
-Production deploys run on every push to **`main`** via [`.github/workflows/deploy-vercel.yml`](.github/workflows/deploy-vercel.yml). The workflow checks out **Git LFS** files, runs `npm ci` + `npm run lint`, then builds and deploys with the Vercel CLI.
+## Deployment (Vercel Git)
+
+**Production** is deployed by **Vercel’s Git integration**: connect this repository, set the **Production branch** to `main`, and push. No duplicate CLI deploy runs in GitHub Actions.
 
 ### One-time Vercel setup
 
-1. Import the repo in [Vercel](https://vercel.com/new) **or** create an empty project and link it locally with `npx vercel link` (generates `.vercel/project.json`; that folder stays gitignored).
-2. In the Vercel project, add the same variables as in **Environment variables** (Production).
-3. Create a [Vercel token](https://vercel.com/account/tokens).
-4. From `.vercel/project.json` after linking (or from the project / team settings in the dashboard), copy **`orgId`** → `VERCEL_ORG_ID` and **`projectId`** → `VERCEL_PROJECT_ID`.
+1. Import the repo in [Vercel](https://vercel.com/new) (or link with `npx vercel link`; `.vercel/` stays gitignored).
+2. Under **Settings → Environment Variables**, add the same keys as in **Environment variables** (at least for **Production**).
+3. After changing variables, trigger a **new** deployment (push to `main` or **Deployments → Redeploy** on a normal Git-built deployment).
 
-### GitHub repository secrets
+### GitHub Actions (CI only)
 
-In the repo: **Settings → Secrets and variables → Actions → New repository secret**:
-
-| Secret                 | Value                                      |
-| ---------------------- | ------------------------------------------ |
-| `VERCEL_TOKEN`         | Token from Vercel account settings         |
-| `VERCEL_ORG_ID`        | `orgId` from linked project                |
-| `VERCEL_PROJECT_ID`    | `projectId` from linked project            |
-
-After secrets are set, push to `main` (or run the workflow manually under **Actions → Deploy to Vercel → Run workflow**).
-
-### Branches
-
-The workflow triggers on **`main` only**. To deploy from another branch, either merge into `main` or edit `deploy-vercel.yml` under `on.push.branches`.
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs on pushes and PRs to **`main`**: checkout with **Git LFS**, `npm ci`, `npm run lint`, `npm run build`. It does **not** deploy to Vercel. No Vercel-related GitHub secrets are required for this path.
 
 ### Git LFS on Vercel
 
-This repo stores large videos with Git LFS. The workflow uses `actions/checkout` with `lfs: true` so builds receive real files.
+Large `.mp4` files use Git LFS. After a Git-based deploy, open the live site and confirm media loads. If pointers or broken videos appear, Vercel’s checkout may not be pulling LFS objects—use the **fallback** below.
+
+### Fallback: prebuilt deploy from Actions only
+
+1. **Vercel** → **Settings** → **Git** → **Ignored Build Step** → set the command to `exit 0` (exit code **0** means “skip this build,” so Git pushes no longer produce a Vercel build).
+2. In [`.github/workflows/deploy-vercel-prebuilt.yml`](.github/workflows/deploy-vercel-prebuilt.yml), under `on:`, add a **`push`** trigger for `main` (same shape as `ci.yml`), or run **Actions → Deploy to Vercel (prebuilt) → Run workflow** manually when you need a release.
+3. Add GitHub **repository secrets**: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` (from [Vercel tokens](https://vercel.com/account/tokens) and the project/team settings).
+
+Prebuilt deployments still need a **new** workflow run after editing Vercel env vars; dashboard **Redeploy** on those deployments may not refresh variables ([Vercel note](https://vercel.com/docs/deployments/troubleshoot-a-build#prebuilt-deployments)).
