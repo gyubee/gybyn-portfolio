@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import HeroTitle from "./HeroTitle";
 
@@ -11,15 +12,18 @@ const Hero: React.FC = () => {
         {showContent && (
           <div className="flex flex-col items-center text-center space-y-6 px-4 mt-3">
             <motion.div
-              className="mb-10 w-70 h-70 rounded-full border-4 border-[#FACC15] bg-white flex items-center justify-center overflow-hidden shadow"
+              className="relative mb-10 h-[17.5rem] w-[17.5rem] overflow-hidden rounded-full border-4 border-[#FACC15] bg-white shadow"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
             >
-              <img
+              <Image
                 src="/profile.jpg"
                 alt="Gyubeen Profile"
-                className="w-full h-full object-cover rounded-full"
+                fill
+                sizes="280px"
+                className="object-cover rounded-full"
+                priority
               />
             </motion.div>
           </div>
