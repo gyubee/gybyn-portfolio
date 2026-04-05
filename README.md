@@ -38,7 +38,7 @@ Create `.env.local` in the project root (never commit it). Used by the contact A
 | Variable              | Required | Description                                      |
 | --------------------- | -------- | ------------------------------------------------ |
 | `RESEND_API_KEY`      | For email | Resend API key (`re_...`)                     |
-| `RESEND_FROM_EMAIL`   | For email | Verified sender, e.g. `Name <hi@yourdomain.com>` |
+| `RESEND_FROM_EMAIL`   | For email | Verified sender: `hi@yourdomain.com` or ASCII `Name <hi@yourdomain.com>` |
 | `CONTACT_TO_EMAIL`    | For email | Inbox that receives form submissions (or use `RESEND_TO_EMAIL`) |
 
 If these are missing, `POST /api/contact` returns `503` and the UI falls back to a `mailto:` draft.
