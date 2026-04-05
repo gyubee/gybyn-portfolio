@@ -17,6 +17,13 @@ const nextConfig: NextConfig = {
         permanent: false,
         basePath: false,
       },
+      // Browsers request these at the origin root; static files live under basePath.
+      {
+        source: "/apple-touch-icon.png",
+        destination: `${basePath}/apple-touch-icon.png`,
+        permanent: false,
+        basePath: false,
+      },
     ];
   },
   // Dev: Next compares the request Origin *hostname* to these strings (not full URLs).
